@@ -38,14 +38,12 @@ def process_text(text):
             i += 2
     if len(result) % 2 != 0:
         result += "X"
-        print(result)
     return result
 
 def encrypt(text, key):
     matrix = create_matrix(key)
-    # Simpan posisi spasi
     space_positions = [i for i, c in enumerate(text) if c == ' ']
-    
+
     clean_text = text.upper()
     filtered = ''.join(c for c in clean_text if c.isalpha())
     processed = process_text(filtered)
@@ -66,11 +64,10 @@ def encrypt(text, key):
             ciphertext += matrix[row1][col2]
             ciphertext += matrix[row2][col1]
 
-    # Sisipkan kembali spasi di posisi semula
     for pos in space_positions:
         ciphertext = ciphertext[:pos] + ' ' + ciphertext[pos:]
 
-    return ciphertext
+    return ciphertext, processed  # ⬅️ return tambahan: processed
 
 def decrypt(text, key):
     matrix = create_matrix(key)
@@ -85,7 +82,6 @@ def decrypt(text, key):
         row1, col1 = find_position(matrix, a)
         row2, col2 = find_position(matrix, b)
 
-
         if row1 == row2:
             plaintext += matrix[row1][(col1 - 1) % 5]
             plaintext += matrix[row2][(col2 - 1) % 5]
@@ -96,7 +92,6 @@ def decrypt(text, key):
             plaintext += matrix[row1][col2]
             plaintext += matrix[row2][col1]
 
-    # Sisipkan kembali spasi
     for pos in space_positions:
         plaintext = plaintext[:pos] + ' ' + plaintext[pos:]
 
