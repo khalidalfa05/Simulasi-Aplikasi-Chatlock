@@ -73,8 +73,9 @@ class ChatWindow:
         text = self.entry_user1.get()
         if text.strip() == "":
             return
-        encrypted = encrypt(text, self.key)
+        encrypted, processed = encrypt(text, self.key)
         decrypted = decrypt(encrypted, self.key)
+
         self.display_message("🟢 User 1 (Encrypted)", encrypted, "#cdeccd")
         self.display_message("🟢 User 1 (Decrypted)", decrypted, "#ffffff")
         self.log_message("User 1", text, encrypted)
@@ -84,8 +85,9 @@ class ChatWindow:
         text = self.entry_user2.get()
         if text.strip() == "":
             return
-        encrypted = encrypt(text, self.key)
+        encrypted, processed = encrypt(text, self.key)
         decrypted = decrypt(encrypted, self.key)
+
         self.display_message("🔵 User 2 (Encrypted)", encrypted, "#cbe9f7")
         self.display_message("🔵 User 2 (Decrypted)", decrypted, "#ffffff")
         self.log_message("User 2", text, encrypted)
